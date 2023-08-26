@@ -19,21 +19,18 @@ using namespace std;
 int graph[MAX];
 int visited[MAX] = { 0 };
 int n, m;
-vector<pair<int, int>>l, s;
+vector<pair<int, int>>mov;
 queue<pair<int, int>>q;
 int dx[6] = { 1,2,3,4,5,6 };
 
 int isSnakeLadder(int n) {
-	for (int i = 0; i < l.size(); i++) {
-		if (n == l[i].first)
-			return l[i].second;
-	}
-	for (int i = 0; i < s.size(); i++) {
-		if (n == s[i].first)
-			return s[i].second;
+	for (int i = 0; i < mov.size(); i++) {
+		if (n == mov[i].first)
+			return mov[i].second;
 	}
 	return n;
 }
+
 void bfs() {
 	q.push({ 1,0 });
 	while (!q.empty()) {
@@ -58,16 +55,12 @@ void bfs() {
 
 int main() {
 	cin >> n >> m;
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n+m; i++) {
 		int a, b;
 		cin >> a >> b;
-		l.push_back({ a,b });
+		mov.push_back({ a,b });
 	}
-	for(int i = 0; i < m; i++) {
-		int a, b;
-		cin >> a >> b;
-		s.push_back({ a,b });
-	}
+
 	bfs();
 	return 0;
 }
