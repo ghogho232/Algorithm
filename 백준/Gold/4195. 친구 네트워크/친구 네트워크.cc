@@ -27,12 +27,13 @@ int Find(int x){
 void Union(int x, int y){
     x = Find(x);
     y = Find(y);
-    if(x != y){
-        if(Size[x] < Size[y])
-            swap(x, y);
+    if(x < y){
         arr[y] = x;
         Size[x] += Size[y];
-        Size[y] = 0;
+    }
+    else{
+        arr[x] = y;
+        Size[y] += Size[x];
     }
 }
 
@@ -52,7 +53,7 @@ int main() {
     cin >> T;
     while(T--){
         cin >> F;
-        map<string,int>m;
+        unordered_map<string,int>m;
         int idx = 0;
         for(int i=0 ; i<200001 ; i++) {
             arr[i] = i;
