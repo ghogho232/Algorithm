@@ -25,7 +25,7 @@ int main() {
     string str;
     cin >> str;
     int arr[51];
-    int sum = 0;
+    ll sum = 0;
     for(int i = 0; i < n; i++){
         arr[i] = str[i] - 'a' + 1;
         sum += arr[i] * pow(31,i);
