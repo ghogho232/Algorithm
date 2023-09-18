@@ -16,17 +16,22 @@
 
 using namespace std;
 
-int solve(int n, int r, int c) {
-	if (n == 0) 
-        return 0;
-	int half = 1 << (n - 1); 
-	if (r < half && c < half) 
-        return solve(n - 1, r, c);
-	if (r < half && c >= half) 
-        return (half * half) + solve(n - 1, r, c - half);
-	if (r >= half && c < half) 
-        return 2 * (half * half) + solve(n - 1, r - half, c);
-	return 3 * (half * half) + solve(n - 1, r - half, c - half);
+int n, r, c, ans = 0;
+
+void solve(int y, int x, int size){
+    if(y == r && x == c){
+        cout << ans;
+        return;
+    }
+    if(r < y + size && r >= y && c < x + size && c >= x){
+        solve(y, x, size / 2);
+        solve(y , x + size/2, size / 2);
+        solve(y + size / 2, x, size / 2);
+        solve(y + size / 2, x + size / 2, size / 2);
+    }
+    else{
+        ans += size * size;
+    }       
 }
 
 int main() {
@@ -34,9 +39,7 @@ int main() {
     cin.tie(0);
     cout.tie(0);
 
-    int n, r, c;
     cin >> n >> r >> c;
-    cout << solve(n,r,c);
-
+    solve(0, 0, (1 << n));
     return 0;
 }
