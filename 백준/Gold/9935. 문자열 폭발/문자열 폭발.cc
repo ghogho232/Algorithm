@@ -1,46 +1,69 @@
-#include <string.h>
-#include <stdio.h>
-#include <stack>
-#include <algorithm>
+#define _CRT_SECURE_NO_WARNINGS
+#include<cstdio>
+#include<iostream>
+#include<algorithm>
+#include<string>
+#include<cstring>
+#include<string.h>
+#include<math.h>
+#include<queue>
+#include<vector>
+#include<stack>
+#include<map>
+#include<set>
+#include<deque>
+#include <sstream>
+#include <iomanip>
+#define ll long long
+
 using namespace std;
-typedef pair<char, int> PAIR;
-char str[1000004];
-char explode[38];
-char result[1000004];
-int main(void) {
-    scanf("%s", str);
-    scanf("%s", explode);
-    int str_len = strlen(str);
-    int explode_len = strlen(explode);
-    int st_idx = 0;
-    stack<PAIR> S;
-    int match_len = 0;
+
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    string str, bomb;
+    cin >> str >> bomb;
+    int str_len = str.length();
+    int bomb_len = bomb.length();
+    int len = 0;
+    stack<pair<char, int>> S;
+
     for (int i = 0; i < str_len; i++) {
-        if (str[i] == explode[match_len])
-            match_len++;
-        else if (str[i] == explode[0])
-            match_len = 1;
+        if (str[i] == bomb[len])
+            len++;
+        else if (str[i] == bomb[0])
+            len = 1;
         else
-            match_len = 0;
-        S.push({ str[i], match_len });
-        if (match_len == explode_len) {
-            for (int i = 0; i < explode_len; i++)
+            len = 0;
+
+        S.push({str[i], len});
+
+        if (len == bomb_len) {
+            for (int j = 0; j < bomb_len; j++)
                 S.pop();
+
             if (!S.empty())
-                match_len = S.top().second;
+                len = S.top().second;
             else
-                match_len = 0;
+                len = 0;
         }
     }
+
     int stack_sz = S.size();
     if (stack_sz == 0) {
-        printf("FRULA");
+        cout << "FRULA";
         return 0;
     }
-    result[stack_sz] = 0;
+
+    string result(stack_sz, ' ');
     for (int i = stack_sz - 1; i >= 0; i--) {
         result[i] = S.top().first;
         S.pop();
     }
-    printf("%s", result);
+
+    cout << result;
+    return 0;
 }
