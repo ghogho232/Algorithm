@@ -3,35 +3,44 @@
 #include<iostream>
 #include<algorithm>
 #include<string>
+#include<cstring>
+#include<string.h>
 #include<math.h>
 #include<queue>
 #include<vector>
 #include<stack>
-
+#include<map>
+#include<set>
+#include<deque>
+#include <sstream>
+#include <iomanip>
+#define ll long long
 
 using namespace std;
-
-bool dic(string str1, string str2) {
-	if (str1.length() < str2.length())
-		return true;
-	else if (str1.length() == str2.length()) {
-		return str1 < str2;
-	}
-	else
-		return false;
+bool sort_dic(string& str1, string& str2){
+    if(str1.length() != str2.length())
+        return str1.length() < str2.length();
+    return str1 < str2;
 }
-int main(){
-	int n;
-	cin >> n;
-	vector<string> v(n);
-	for (int i = 0; i < n; i++) {
-		cin >> v[i];
-	}
+int main(void) {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int n;
+    cin >> n;
+    set<string>s;
+    vector<string> v;
 
-	sort(v.begin(), v.end(), dic);
-	v.erase(unique(v.begin(), v.end()),v.end());
-	for (int i = 0; i < v.size(); i++) {
-		cout << v[i] << "\n";
-	}
-	return 0;
+    for(int i = 0; i < n; i++){
+        string str;
+        cin >> str;
+        s.insert(str);
+    }
+    for(auto it = s.begin(); it != s.end(); it++){
+        v.push_back(*it);
+    }
+    sort(v.begin(), v.end(), sort_dic);
+    for(int i = 0; i < v.size(); i++){
+        cout << v[i]<<"\n";
+    }
 }
