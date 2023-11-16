@@ -2,6 +2,8 @@
 #include<cstdio>
 #include<iostream>
 #include<algorithm>
+#include<string>
+#include<cstring>
 #include<string.h>
 #include<math.h>
 #include<queue>
@@ -11,29 +13,32 @@
 #include<set>
 #include<deque>
 #include <sstream>
+#include <iomanip>
+#define ll long long
 
 using namespace std;
 
-int main() {
+int main(void) {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL); 
-    while (true) {
-        string str;
-        cin >> str;
-        bool flag = false;
-        if (str == "0")
+    cin.tie(0);
+    cout.tie(0);
+    while(true){
+        int n, cnt = 0;
+        bool flag=true;
+        cin >> n;
+        if(n == 0)
             break;
-        for (int i = 0; i < (str.length() / 2); i++) {
-            if (str[i] != str[str.length() - 1 - i]) {
-                cout << "no" << "\n";
-                flag = true;
+        string str = to_string(n);
+        for(int i = 0; i < str.size()/2; i++){
+            if(str[i] != str[str.size()-i-1]){
+                cout << "no" <<"\n";
+                flag = false;
                 break;
             }
         }
-        if (!flag) {
-            cout << "yes" << "\n";
-        }
-    } 
+        if(flag)
+            cout <<"yes" <<"\n";
+
+    }
     return 0;
 }
