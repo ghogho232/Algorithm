@@ -1,74 +1,69 @@
-#include<iostream>
-#include<vector>
-#include<cstring>
-#include<cstdlib>
-#include<cmath>
-#include<string>
-#include<algorithm>
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<cstdio>
+    #include<iostream>
+    #include<algorithm>
+    #include<string>
+    #include<cstring>
+    #include<string.h>
+    #include<math.h>
+    #include<queue>
+    #include<vector>
+    #include<stack>
+    #include<map>
+    #include<set>
+    #include<deque>
+    #include <sstream>
+    #include <iomanip>
+    #define ll long long
 
-using namespace std;
+    using namespace std;
+    int l, c;
+    int a=0,b=0;
+    char arr[16];
+    vector<char> ans;
+    int visited[16];
+    vector<int>v;
+    bool is_consonant(char c) {
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+            return false;
+        return true;
+    }
+    void dfs(int k, int asc, int a, int b){
+        if(k == l&& (a >= 2 && b >= 1)){
+            for(auto it=ans.begin(); it != ans.end(); it++){
+                cout << *it;
+            }
+            cout <<"\n";
+            a=0,b=0;
+            return;
+        }
+        else if(k == l && (a<2 || b <1))
+            return;
+        for(int i = asc; i < c; i++){
+            if(!visited[i]){
+                visited[i] = 1;
+                ans.push_back(arr[i]);
+                if(is_consonant(arr[i]))
+                    dfs(k+1, i,a+1,b);
+                else
+                    dfs(k+1, i, a, b+1);
+                visited[i] = 0;
+                ans.pop_back();            
+            }
+        }
+    }
 
-int L, C;
-char alphabet[16];
-char arr[16];
-bool visit[16] = { false, };
+    int main(void) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(0);
+        cout.tie(0);
+        cin >> l >> c;
+        for(int i = 0; i < c; i++){
+            cin >> arr[i];
 
-bool is_consonant(char c) {
-	if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
-		return false;
-	return true;
-}
+        }
+        sort(arr, arr+c);
+        dfs(0, 0, a, b);
 
-void dfs(int idx, int c, int v, int depth) {
-
-	if (depth == L && c > 1 && v > 0) {
-		for (int i = 0; i < L; i++)
-			cout << arr[i];
-		cout << endl;
-		return;
-	}
-	else if (depth == L && (c < 2 || v < 1))
-		return;
-
-	for (int i = idx + 1; i < C; i++) {
-		if (!visit[i]) {
-			visit[i] = true;
-			char ch = alphabet[i];
-			arr[depth] = ch;
-			if (is_consonant(ch))
-				dfs(i, c + 1, v, depth + 1);
-			else
-				dfs(i, c, v + 1, depth + 1);
-			visit[i] = false;
-		}
-	}
-
-}
-
-int main(void) {
-
-	cin >> L >> C;
-
-	for (int i = 0; i < C; i++) {
-		cin >> alphabet[i];
-	}
-
-	sort(alphabet, alphabet + C);
-
-	for (int i = 0; i < C; i++) {
-		memset(visit, false, sizeof(visit));
-		arr[0] = alphabet[i];
-		visit[i] = true;
-		int c = 0;
-		int v = 0;
-		if (is_consonant(alphabet[i])) {
-			c++;
-		}
-		else {
-			v++;
-		}
-		dfs(i, c, v, 1);
-	}
-
-	return 0;
-}
+        return 0;
+    }   
