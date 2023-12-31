@@ -23,21 +23,25 @@ int main() {
     cin.tie(0);
     cout.tie(0);
     int n, m;
-    cin >> n >> m;
-    vector<ll>v(n);
     ll ans = 0;
-
+    cin >> n >> m;
+    priority_queue<ll, vector<ll>, greater<ll>>pq;
     for(int i = 0; i < n; i++){
-        cin >> v[i];
+        int a;
+        cin >> a;
+        pq.push(a);
     }
-
     while(m--){
-        sort(v.begin(),v.end());
-        ll tmp = v[0] + v[1];
-        v[0] = v[1] = tmp;
+        ll tmp1 = pq.top();
+        pq.pop();
+        ll tmp2 = pq.top();
+        pq.pop();
+        pq.push(tmp1+tmp2);
+        pq.push(tmp1+tmp2);
     }
-    for(int i = 0; i < n; i++){
-        ans += v[i];
+    while(!pq.empty()){
+        ans += pq.top();
+        pq.pop();
     }
     cout << ans;
     return 0;
