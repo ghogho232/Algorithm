@@ -22,31 +22,28 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-
     int n, k;
-    cin >> n >> k;
-
+    int dp[10001];
     int arr[101];
-    for (int i = 0; i < n; i++) {
+    cin >> n >> k;
+    for(int i = 0; i < n; i++){
         cin >> arr[i];
     }
-    sort(arr, arr + n, greater<int>());
-    int dp[10001];
-    fill(dp, dp + 10001, 987654321);
+    sort(arr,arr+n,greater<int>());
+    fill(dp,dp+10001,987654321);
     dp[0] = 0;
-
-    for (int i = 1; i <= k; i++) {
-        for (int j = 0; j < n; j++) {
-            if (arr[j] <= i && dp[i - arr[j]] + 1 < dp[i]) {
-                dp[i] = dp[i - arr[j]] + 1;
+    for(int i = 1; i <= k; i++){
+        for(int j = 0; j < n; j++){
+            if(arr[j] <= i && dp[i-arr[j]]+1<dp[i]){
+                dp[i] = dp[i-arr[j]]+1;
             }
         }
     }
-    if (dp[k] == 987654321) {
-        cout << -1;
-    } else {
-        cout << dp[k];
-    }
 
+    if(dp[k] == 987654321){
+        cout << -1;
+    }
+    else
+        cout << dp[k];
     return 0;
 }
