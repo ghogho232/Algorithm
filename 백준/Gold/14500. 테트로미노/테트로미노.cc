@@ -3,6 +3,8 @@
 #include<iostream>
 #include<algorithm>
 #include<string>
+#include<cstring>
+#include<string.h>
 #include<math.h>
 #include<queue>
 #include<vector>
@@ -13,64 +15,60 @@
 #include <sstream>
 #include <iomanip>
 #define ll long long
-
+#define MAX INT_MAX
+#define MOD 1000000003
 using namespace std;
 
-int graph[501][501] = {0};
-int visited[501][501] = {0};
-int dx[4] = {0, 0, -1, 1};
-int dy[4] = {-1, 1, 0, 0,};
-int MAX = 0, sum = 0, ret = 0;
-int n, m;
-
-const int o[4][4][2] = {
+int n,m;
+int graph[501][501];
+int visited[501][501];
+int dx[4]={-1,0,1,0};
+int dy[4] = {0,-1,0,1};
+int ans = 0;
+int o[4][4][2]={
     {{1, 0}, {0, 1}, {1, 1}, {1, 2}},
     {{0, 0}, {0, 1}, {1, 1}, {0, 2}},
     {{1, 0}, {0, 1}, {1, 1}, {2, 1}},
     {{0, 0}, {1, 0}, {1, 1}, {2, 0}}
 };
 
-int odfs(int y, int x) {
-    int ret = 0; 
-    for (int i = 0; i < 4; i++) {
+int odfs(int x, int y){
+    int ret = 0;
+    for(int i = 0; i < 4; i++){
         int tmp = 0;
-        for (int j = 0; j < 4; j++) {
-            int nx = x + o[i][j][1];
-            int ny = y + o[i][j][0];
-            if (nx < 0 || nx >= m || ny < 0 || ny >= n) {
-                tmp = 0;
+        for(int j = 0; j < 4; j++){
+            int nx = x + o[i][j][0];
+            int ny = y + o[i][j][1];
+            if(nx<0 || nx>=n || ny<0 || ny>=m){
+                tmp=0;
                 break;
             }
-            else
-                tmp += graph[ny][nx];     
+            else 
+                tmp+=graph[nx][ny];
         }
-        ret = max(tmp, ret);
+        ret = max(ret,tmp);
     }
     return ret;
 }
-
-void dfs(int y, int x, int depth, int sum){
-    if(depth == 3) {
-        MAX = max(MAX, sum);
+void dfs(int x, int y, int depth, int sum){
+    if(depth == 3){
+        ans = max(ans,sum);
         return;
     }
-
     for(int i = 0; i < 4; i++){
         int nx = x + dx[i];
         int ny = y + dy[i];
-        if(nx < 0 || nx >=m || ny <0 || ny >=n || visited[ny][nx])
+        if(nx<0 || nx>=n || ny<0 || ny>=m||visited[nx][ny])
             continue;
-        visited[ny][nx] = 1;
-        dfs(ny, nx, depth + 1, sum + graph[ny][nx]);
-        visited[ny][nx] = 0;
+        visited[nx][ny] = 1;
+        dfs(nx, ny, depth+1, sum+graph[nx][ny]);
+        visited[nx][ny] = 0;
     }
-
 }
-
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin.tie(0);
+    cout.tie(0);
     cin >> n >> m;
     for(int i = 0; i < n; i++){
         for(int j = 0; j < m; j++){
@@ -80,15 +78,15 @@ int main() {
     for(int i = 0; i < n; i++){
         for(int j = 0; j < m; j++){
             visited[i][j] = 1;
-            dfs(i, j, 0, graph[i][j]);
+            dfs(i,j,0,graph[i][j]);
             visited[i][j] = 0;
         }
     }
     for(int i = 0; i < n; i++){
         for(int j = 0; j < m; j++){
-            MAX = max(MAX, odfs(i,j));
+            ans = max(ans,odfs(i,j));
         }
     }
-    cout << MAX;
+    cout << ans;
     return 0;
 }
