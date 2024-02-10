@@ -30,30 +30,25 @@ int main() {
     for(int i = 0; i < n; i++){
         cin >> arr[i];
     }
-    int tmp = 0;
+    int tmp = arr[0];
     int cnt = 0;
-    for(int i = 0; i < n; i++){
-        tmp += arr[i];
+    int right = 0;
+    int left = 0;
+    while(right < n){
         if(tmp == m){
             cnt++;
+            tmp -= arr[left];
+            left++;
+            right++;   
+            tmp += arr[right];
         }
-        if(tmp > m){
-            tmp = 0;
-            continue;
+        else if(tmp < m){
+            right++;
+            tmp += arr[right];
         }
-        for(int j = i+1; j < n; j++){
-            tmp += arr[j];
-            if(tmp == m){
-                cnt++;
-            }
-            if(tmp > m){
-                tmp = 0;
-                break;;
-            }
-            if(j == n-1){
-                tmp = 0;
-                break;
-            }
+        else if(tmp > m){
+            tmp -= arr[left];
+            left++;
         }
     }
     cout << cnt;
