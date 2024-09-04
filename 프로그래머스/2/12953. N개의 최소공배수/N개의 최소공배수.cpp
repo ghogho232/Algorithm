@@ -14,14 +14,11 @@ int lcm(int a, int b){
     return (a*b)/gcd(a,b);
 }
 int solution(vector<int> arr) {
-    int answer = 0;
-    int tmpgcd;
+    int answer = arr[0];
+
     for(int i = 1; i < arr.size(); i++){
-      tmpgcd = gcd(arr[i-1],arr[i]);
+        answer = lcm(answer, arr[i]);
     }
-    for(int i = 0; i < arr.size(); i++){
-        tmpgcd = lcm(tmpgcd, arr[i]);
-    }
-    answer = tmpgcd;
+
     return answer;
 }
